@@ -1,0 +1,84 @@
+<!doctype html>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap');
+.mainHeading{
+    text-align: center;
+    font-family: 'Noto Sans';
+    font-weight: 100;
+}
+#search{
+margin-left: 34%;
+height: 30px;
+width: 500px;
+font-size: 20px;
+}
+.searchBtn{
+    height: 35px;
+}
+.resultHeading{
+    text-align: center;
+    font-family: 'Noto Sans';
+    margin-top: 50px;
+}
+.resultTable{
+
+}
+</style>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Weather App</title>
+</head>
+<body class="bg-primary text-light">
+    <h1 class="mainHeading">Find The Weather</h1>
+    <form action="{{ url_for('index') }}" method="post">
+        <input type="text" name="search" id="search">
+        <input type="submit" value="Search" class="searchBtn">
+    </form>
+        {%if data['cod'] == 200: %}
+            <h3 class="resultHeading">{{data['name']}} <img src="http://openweathermap.org/img/wn/{{data['weather'][0]['icon']}}.png" alt="Weather"></h3>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="resultTable table">
+                        <tr>
+                            <th>Temperature:</th>
+                            <td>{{data['main']['temp']}}°C</td>
+                        </tr>
+                        <tr>
+                            <th>Feels Like:</th>
+                            <td>{{data['main']['feels_like']}}°C</td>
+                        </tr>
+                        <tr>
+                            <th>Humidity:</th>
+                            <td>{{data['main']['humidity']}}%</td>
+                        </tr>
+                        <tr>
+                            <th>Pressure:</th>
+                            <td>{{data['main']['pressure']}} hPa</td>
+                        </tr>
+                        <tr>
+                            <th>Visibility:</th>
+                            <td>{{data['visibility']}} km</td>
+                        </tr>
+                        <tr>
+                            <th>Sunset:</th>
+                            <td>{{data['sys']['sunset']}}</td>
+                        </tr>
+                        <tr>
+                            <th>Sunrise:</th>
+                            <td>{{data['sys']['sunrise']}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% else: %}
+            <h3 class="resultHeading">{{data['message']}}</h3>
+        {% endif %}
+</body>
+</html>
