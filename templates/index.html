@@ -39,6 +39,7 @@ font-size: 20px;
         <input type="text" name="search" id="search">
         <input type="submit" value="Search" class="searchBtn">
     </form>
+
         {%if data['cod'] == 200: %}
             <h3 class="resultHeading">{{data['name']}} <img src="http://openweathermap.org/img/wn/{{data['weather'][0]['icon']}}.png" alt="Weather"></h3>
         <div class="container">
@@ -77,8 +78,11 @@ font-size: 20px;
                 </div>
             </div>
         </div>
+        {% elif data['cod'] == 401: %}
+            <h3 class="resultHeading">Search for your location.</h3>
         {% else: %}
             <h3 class="resultHeading">{{data['message']}}</h3>
         {% endif %}
+
 </body>
 </html>

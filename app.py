@@ -8,8 +8,10 @@ r = requests
 @app.route("/", methods = ["post", "get"])
 def index():
 
-    if(request.method == "get"):
-        return render_template("index.html")
+    if(request.form.get('search') == None or request.form.get('search') == ""):
+        data = {}
+        data['cod'] = 401
+        return render_template("index.html", data=data)
     else:
         location = request.form.get('search')
         link = "http://api.openweathermap.org/data/2.5/weather?q={}&appid=241d84ab30d60c4945a77350032fc958" . format(location)
